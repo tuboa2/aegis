@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+/* =====================================
+   USWDS-inspired "Trust" design system
+   ===================================== */
+
+:root {
+  /* === Neutral / Foundations === */
+  --background: 0 0% 96%;          /* #f5f5f5 Neutral-BG */
+  --foreground: 0 0% 10%;          /* #1b1b1b Neutral-Text */
+  --border: 210 5% 85%;            /* #dfe1e2 Neutral-UI */
+  --card: 0 0% 100%;               /* #ffffff Neutral-White */
+  --card-foreground: var(--foreground);
+  --popover: 0 0% 100%;
+  --popover-foreground: var(--foreground);
+
+  /* === Brand / Trust Palette === */
+  --primary: 210 100% 32%;         /* #005ea2 Brand-Primary */
+  --primary-foreground: 0 0% 100%; /* white text */
+  --primary-dark: 219 55% 20%;     /* #162e51 Brand-Dark */
+  --primary-light: 210 54% 90%;    /* #d9e8f6 Brand-Light (BG) */
+  --primary-light-text: 205 100% 42%; /* #0076d6 Brand-Light-Text */
+
+  /* === Semantic / Action Palette === */
+  --destructive: 0 89% 36%;        /* #b50909 Semantic-Danger */
+  --destructive-foreground: 0 0% 100%;
+  --warning: 27 96% 62%;           /* #fa9441 Semantic-Warning */
+  --warning-foreground: 0 0% 100%;
+  --caution: 45 100% 59%;          /* #ffbe2e Semantic-Caution */
+  --success: 81 100% 26%;          /* #538200 Semantic-Success */
+  --success-foreground: 0 0% 100%;
+  --info: 210 100% 32%;            /* #005ea2 Semantic-Info (same as primary) */
+  --info-foreground: 0 0% 100%;
+
+  /* === Muted / Secondary === */
+  --muted: var(--primary-light);
+  --muted-foreground: 210 20% 40%;
+
+  /* === Accent (for highlights) === */
+  --accent: 205 100% 42%;          /* #0076d6 */
+  --accent-foreground: 0 0% 100%;
+
+  /* === Other === */
+  --input: var(--border);
+  --ring: var(--primary);
+  --radius: 0.75rem;
+}
+
+/* =====================================
+   Dark Mode (optional)
+   ===================================== */
+
+.dark {
+  --background: 220 25% 8%;
+  --foreground: 0 0% 98%;
+  --border: 220 10% 25%;
+  --card: 220 15% 12%;
+  --card-foreground: var(--foreground);
+  --popover: 220 25% 10%;
+  --popover-foreground: var(--foreground);
+
+  --primary: 210 100% 45%;  /* lighter blue for dark bg */
+  --primary-foreground: 0 0% 100%;
+
+  --primary-dark: 210 100% 30%;
+  --primary-light: 210 54% 85%;
+  --primary-light-text: 205 100% 60%;
+
+  --destructive: 0 85% 55%;
+  --warning: 27 96% 65%;
+  --caution: 45 100% 65%;
+  --success: 81 100% 35%;
+  --info: 210 100% 45%;
+
+  --muted: 220 20% 20%;
+  --muted-foreground: 220 10% 65%;
+
+  --accent: 205 100% 60%;
+  --accent-foreground: 0 0% 100%;
+  --ring: var(--primary);
+}
+
+/* =====================================
+   Global base styles
+   ===================================== */
+
+* {
+  border-color: hsl(var(--border));
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+/* =====================================
+   Semantic Shortcuts (Tailwind-like)
+   ===================================== */
+
+.bg-background { background-color: hsl(var(--background)); }
+.text-foreground { color: hsl(var(--foreground)); }
+
+.bg-primary { background-color: hsl(var(--primary)); }
+.text-primary { color: hsl(var(--primary)); }
+.text-primary-foreground { color: hsl(var(--primary-foreground)); }
+
+.bg-secondary { background-color: hsl(var(--muted)); }
+.text-secondary-foreground { color: hsl(var(--muted-foreground)); }
+
+.bg-destructive { background-color: hsl(var(--destructive)); }
+.text-destructive-foreground { color: hsl(var(--destructive-foreground)); }
+
+.bg-warning { background-color: hsl(var(--warning)); }
+.text-warning-foreground { color: hsl(var(--warning-foreground)); }
+
+.bg-caution { background-color: hsl(var(--caution)); }
+.text-success { color: hsl(var(--success)); }
+.bg-success { background-color: hsl(var(--success)); }
+.text-success-foreground { color: hsl(var(--success-foreground)); }
+
+.bg-info { background-color: hsl(var(--info)); }
+.text-info-foreground { color: hsl(var(--info-foreground)); }
+
+.bg-accent { background-color: hsl(var(--accent)); }
+.text-accent { color: hsl(var(--accent)); }
+.text-accent-foreground { color: hsl(var(--accent-foreground)); }
+
+.bg-card { background-color: hsl(var(--card)); }
+.text-card-foreground { color: hsl(var(--card-foreground)); }
+
+.border-border { border-color: hsl(var(--border)); }

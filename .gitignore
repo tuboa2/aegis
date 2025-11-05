@@ -1,0 +1,22 @@
+# Node (frontend)
+frontend/node_modules/
+dist/
+build/
+.env
+.env.*
+
+# Laravel / PHP (backend)
+backend/vendor/
+storage/
+bootstrap/cache/
+.env
+.env.*
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Others
+*.log

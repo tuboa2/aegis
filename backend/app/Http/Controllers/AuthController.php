@@ -20,7 +20,7 @@ class AuthController extends Controller
     {
         // Validate request
         $validator = Validator::make($request->all(), [
-            'name' => 'requried|string|max:255',
+            'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => ['required', 'confirmed', Password::min(8)->mixedCase()->numbers()],
             'location' => 'nullable|string',
@@ -47,7 +47,7 @@ class AuthController extends Controller
         ]);
 
         // Create auth token
-        $token = $user->createToken('aegies-auth-token')->plainTextToken;
+        $token = $user->createToken('aegis-auth-token')->plainTextToken;
 
         return response()->json([
             'user' => $user,

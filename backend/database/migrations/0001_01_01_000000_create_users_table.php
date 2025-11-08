@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('location')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
-            $table->json('notification_preferences');
+            $table->json('notification_preferences')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
 

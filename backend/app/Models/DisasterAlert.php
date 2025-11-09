@@ -69,13 +69,21 @@ class DisasterAlert extends Model
     }
 
     /*
+        Get related user reports
+    */
+    public function reports(): HasMany
+    {
+        return $this->hasMany(UserReport::class);
+    }
+
+    /*
         Get AI Summary for this alert
     */
-    public function aiSummary(): HasOne
+    /*public function aiSummary(): HasOne
     {
         return $this->hasOne(AiSummary::class);
     }
-
+    */
     /*
         Scope active alerts
     */

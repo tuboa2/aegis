@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('user_reports', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
-            $table->foreignId('alert_id')->nullable()->constrained('disaster_alerts')->onDelete('cascade');
+            $table->foreignId('disaster_alert_id')->nullable()->constrained('disaster_alerts')->onDelete('cascade');
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->enum('type', ['earthquake', 'flood', 'storm', 'wildfire', 'other'])->nullable();

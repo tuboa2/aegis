@@ -68,7 +68,7 @@ class DisasterAlertController extends Controller
 
             $bySeverity = DisasterAlert::active()
                 ->selectRaw('severity, count(*) as count')
-                ->groubBy('severity')
+                ->groupBy('severity')
                 ->get()
                 ->pluck('count', 'severity');
 

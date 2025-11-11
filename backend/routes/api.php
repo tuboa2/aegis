@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DisasterAlertController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,8 +33,10 @@ Route::middleware(['auth:sanctum'])->group(function() {
 
   // Disater alerts (to be implemented later)
   Route::prefix('/alerts')->group(function () {
-    Route::get('/', function () {
-      return response()->json(['message' => 'Alerts endpoint']);
-    });
+    Route::get('/', [DisasterAlertController::class, 'index']);
+    Route::get('/statistics', [DisasterAlertController::class, 'statistics']);
+    Route::post('/', [DisasterAlertController::class, 'store']);
+    Route::get('/alert', [DisasterAlertController::class, 'show']);
+    Route::post('/sync-external', [DisasterAlertController::class, 'syncExternalData']);
   });
 });

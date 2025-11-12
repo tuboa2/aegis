@@ -48,6 +48,13 @@ class SyncDisasterData extends Command
                         DisasterAlert::create($alertData);
                         $newCount++;
                     }
+
+                    // New: Generate AI summary for high severity alerts immediately
+                    if (in_array($alertData->severity, ['high', 'critical'])) {
+                        dispatch(function () use ($alertData) {
+                            app(\App\Services\AiService::class)->generateAlertSummary($alertData);
+                        });
+                    }
                 }
 
                 $totalNew += $newCount;

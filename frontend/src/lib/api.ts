@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useAuthStore } from './auth-store';
 
 const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
@@ -28,9 +29,9 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('acces_token');
-      localStorage.removeItem('user');
-      window.location.href = '/login';
+      const authStore = useAuthStore.getState();
+      authStore.logout(); // clears store and localStorage
+      window.location.replace("/login");
     }
     return Promise.reject(error);
   }

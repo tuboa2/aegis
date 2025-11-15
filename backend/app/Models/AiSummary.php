@@ -11,7 +11,7 @@ class AiSummary extends Model
     use HasFactory;
 
     protected $fillable = [
-        'alert_id',
+        'disaster_alert_id',
         'summary_text',
         'risk_assessment',
         'sources_used',

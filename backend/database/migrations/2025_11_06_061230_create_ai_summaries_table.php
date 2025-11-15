@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('ai_summaries', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('alert_id')->nullable()->constrained('disaster_alerts')->onDelete('cascade');
+            $table->foreignId('disaster_alert_id')->nullable()->constrained('disaster_alerts')->onDelete('cascade');
             $table->text('summary_text')->nullable();
-            $table->json('risk_assesment')->nullable(); // New: { overall_risk, factors, timeline, impact_areas }
+            $table->json('risk_assessment')->nullable(); // New: { overall_risk, factors, timeline, impact_areas }
             $table->json('sources_used')->nullable();
             $table->json('key_findings'); // New: Key insights and patterns
             $table->json('predictive_insights'); // New: Future predictions and trends
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->timestamp('generated_at')->useCurrent();
             $table->timestamps();
 
-            $table->index(['alert_id']);
+            $table->index(['disaster_alert_id']);
             $table->index(['confidence_score']);
         });
     }

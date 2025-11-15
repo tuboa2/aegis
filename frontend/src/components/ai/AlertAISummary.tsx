@@ -36,7 +36,7 @@ export function AlertAISummary({ alert }: AlertAISummaryProps) {
     } finally {
       setLoading(false);
     }
-  }, [alert.id, api, toast, setLoading, setSummary]);
+  }, [alert.id, toast, setLoading, setSummary]);
 
   const regenerateSummary = async () => {
     setRegenerating(true);

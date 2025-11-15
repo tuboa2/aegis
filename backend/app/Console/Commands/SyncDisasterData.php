@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Services\ExternalApiService;
 use App\Models\DisasterAlert;
 use Illuminate\Console\Command;
-use illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Log;
 
 class SyncDisasterData extends Command
 {
@@ -50,7 +50,7 @@ class SyncDisasterData extends Command
                     }
 
                     // New: Generate AI summary for high severity alerts immediately
-                    if (in_array($alertData->severity, ['high', 'critical'])) {
+                    if (in_array($alertData['severity'], ['high', 'critical'])) {
                         dispatch(function () use ($alertData) {
                             app(\App\Services\AiService::class)->generateAlertSummary($alertData);
                         });

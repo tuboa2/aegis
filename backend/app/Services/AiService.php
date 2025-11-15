@@ -36,7 +36,7 @@ class AiService
                 'Authorization' => 'Bearer ' . $this->apiKey,
                 'Content-Type' => 'application/json',
             ])->timeout(60)->post($this->baseUrl . '/chat/completions', [
-                'model' => 'gpt-4',
+                'model' => 'gpt-3.5-turbo',
                 'messages' => [
                     [
                         'role' => 'system',
@@ -48,7 +48,7 @@ class AiService
                     ]
                 ],
                 'temperature' => 0.7,
-                'max_tokens' => 1500
+                'max_tokens' => 50
               ]);
 
               if ($response->successful()) {
@@ -205,11 +205,11 @@ class AiService
         try {
             $prompt = $this->buildPredictivePrompt($alerts);
 
-            $reponse = Http::withHeaders([
+            $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $this->apiKey,
                 'Content-Type' => 'application/json',
             ])->timeout(60)->post($this->baseUrl . '/chat/completions', [
-                'model' => 'gpt-4',
+                'model' => 'gpt-3.5-turbo',
                 'messages' => [
                     [
                         'role' => 'system',
@@ -221,8 +221,16 @@ class AiService
                     ]
                 ],
                 'temperature' => 0.7,
-                'max_tokens' => 1000
+                'max_tokens' => 50
             ]);
+
+            if ($response->successful()) {
+                return $this->parsePredictiveAnalysis($response->json()['choices'][0]['message']['content']);
+            }
+    
+            // If request failed, fallback
+            Log::error('Predictive AI request failed: ' . $response->status());
+            return $this->getFallbackPredictiveAnalysis($alerts);
         } catch (\Exception $e) {
             Log::error('Predictive AI analysis error: ' . $e->getMessage());
             return $this->getFallbackPredictiveAnalysis($alerts);
@@ -304,7 +312,7 @@ class AiService
                 'Content-Type' => 'application/json',
             ])->timeout(30)->post($this->baseUrl . '/chat/completions', 
                 [
-                    'model' => 'gpt-4',
+                    'model' => 'gpt-3.5-turbo',
                     'messages' => [
                         [
                             'role' => 'system',

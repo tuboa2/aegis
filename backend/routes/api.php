@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DisasterAlertController;
+use App\Http\Controllers\AIController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -39,4 +40,14 @@ Route::middleware(['auth:sanctum'])->group(function() {
     Route::get('/alert', [DisasterAlertController::class, 'show']);
     Route::post('/sync-external', [DisasterAlertController::class, 'syncExternalData']);
   });
+
+  // AI Routes
+  Route::prefix('/ai')->group(function () {
+    Route::get('/summary/alert/{alert}', [AIController::class, 'generateSummary']);
+    Route::post('/summary/alert/{alert}/regenerate', [AIController::class, 'regenerateSummary']);
+    Route::get('/predictive-insights', [AIController::class, 'predictiveInsights']);
+    Route::post('/query', [AIController::class, 'processQuery']);
+    Route::get('/stats', [AIController::class, 'analysisStats']);
+  });
+  
 });

@@ -79,11 +79,18 @@ class DisasterAlert extends Model
     /*
         Get AI Summary for this alert
     */
-    /*public function aiSummary(): HasOne
+    public function aiSummary(): HasOne
     {
         return $this->hasOne(AiSummary::class);
     }
+    /*
+        New: Check if alert has AI analysis
     */
+    public function getHasAiAnalysisAttribute(): bool
+    {
+        return $this->aiSummary !== null;
+    }
+    
     /*
         Scope active alerts
     */

@@ -4,6 +4,9 @@ import { StatisticsCards } from '../dashboard/StatisticsCards';
 import { DisasterCharts } from '../dashboard/DisasterCharts';
 import { DisasterMap } from '../map/DisasterMap';
 import { AlertList } from '../alerts/AlertList';
+import { AlertAISummary } from '../ai/AlertAISummary';
+import { AIChat } from '../ai/AIChat';
+import { PredictiveInsights } from '../ai/PredictiveInsights';
 import { type DisasterAlert } from '../../types/disaster-alert';
 import { api } from '@/lib/api';
 import { motion } from 'framer-motion';
@@ -103,6 +106,7 @@ export function Dashboard() {
             <TabsTrigger value="map">Live Map</TabsTrigger>
             <TabsTrigger value="alerts">Alert List</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
+            <TabsTrigger value="assistant">AI Assistant</TabsTrigger>
           </TabsList>
 
           {/* Map View */}
@@ -151,6 +155,9 @@ export function Dashboard() {
                           <span className="text-muted-foreground">
                             {new Date(selectedAlert.started_at).toLocaleDateString()}
                           </span>
+                        </div>
+                        <div className="space-y-6">
+                          <AlertAISummary alert={selectedAlert} />
                         </div>
                       </div>
                     ) : (
@@ -245,6 +252,10 @@ export function Dashboard() {
                           </pre>
                         </div>
                       )}
+
+                      <div className="space-y-6">
+                        <AlertAISummary alert={selectedAlert} />
+                      </div>
                     </div>
                   ) : (
                     <p className="text-muted-foreground text-center py-8">
@@ -259,6 +270,23 @@ export function Dashboard() {
           {/* Analytics View */}
           <TabsContent value="analytics">
             <DisasterCharts />
+          </TabsContent>
+
+          {/* New Tab: AI Assitant */}
+          <TabsContent value="assistant" className="space-y-6">
+            <div className="grid gap-6 lg:grid-cols-3">
+              <div className="lg:col-span-2">
+                <AIChat />
+              </div>
+
+              <div className="space-y-6">
+                <PredictiveInsights />
+
+                {selectedAlert && (
+                  <AlertAISummary alert={selectedAlert} />
+                )}
+              </div>
+            </div>
           </TabsContent>
         </Tabs>
       </div>

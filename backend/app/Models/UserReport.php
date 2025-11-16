@@ -74,7 +74,7 @@ class UserReport extends Model
     }
 
     // The user who verified the report
-    public function verifier()
+    public function verifiedBy()
     {
         return $this->belongsTo(User::class, 'verified_by');
     }
@@ -88,7 +88,7 @@ class UserReport extends Model
     // Get upvotes for this report
     public function upvotes(): HasMany
     {
-        return $this->hasMany(ReportVote::class);
+        return $this->hasMany(ReportUpvote::class);
     }
 
     // Check if report is verified

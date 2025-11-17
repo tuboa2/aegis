@@ -37,9 +37,9 @@ return [
         'base_url' => 'https://newsapi.org/v2/',
     ],
 
-    'openai' => [
-        'api_key' => env('OPENAI_API_KEY'),
-        'base_url' => 'https://api.openai.com/v1/',
+    'openrouter' => [
+        'api_key' => env('OPENROUTER_API_KEY'),
+        'base_url' => 'https://openrouter.ai/api/v1',
     ],
 
     'postmark' => [

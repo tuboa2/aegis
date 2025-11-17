@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -32,7 +33,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // This is where $routeMiddleware aliases would go
         $middleware->alias([
             // 'auth' => \App\Http\Middleware\Authenticate::class,
-            // 'isAdmin' => \App\Http\Middleware\IsAdmin::class,
+            'admin' => AdminMiddleware::class,
         ]);
 
     })

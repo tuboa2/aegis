@@ -289,7 +289,7 @@ class CommunityController extends Controller
             ],
             'preparedness_guides' => [
                [
-                    'title' => 'Earthquake Preparedness Guid',
+                    'title' => 'Earthquake Preparedness Guide',
                     'type' => 'earthquake',
                     'steps' => [
                         'Identify safe spots in each room',

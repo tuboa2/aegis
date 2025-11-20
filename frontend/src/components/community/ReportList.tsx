@@ -72,6 +72,10 @@ export function ReportList({ reports, onReportSelect, selectedReport, showAction
     return icons[type as keyof typeof icons] || '⚠️';
   };
 
+  const getImageUrl = (path: string) => {
+    return `http://localhost:8000${path}`;
+  };
+
   const handleUpvote = async (report: UserReport, e: React.MouseEvent) => {
     e.stopPropagation();
 
@@ -162,7 +166,7 @@ export function ReportList({ reports, onReportSelect, selectedReport, showAction
                         <div className="flex items-center space-x-1">
                           <MapPin className="h-3 w-3"/>
                           <span>
-                            {report.location_name || `${report.latitude.toFixed(4)}, ${report.longitude.toFixed(4)}`}
+                            {report.location_name || `${report.latitude?.toFixed(4)}, ${report.longitude?.toFixed(4)}`}
                           </span>
                         </div>
 
@@ -201,7 +205,7 @@ export function ReportList({ reports, onReportSelect, selectedReport, showAction
                         {report.media_urls.slice(0, 3).map((url, index) => (
                           <img 
                             key={index} 
-                            src={url} 
+                            src={getImageUrl(url)} 
                             alt={`Evidence ${index + 1}`} 
                             className="w-16 h-16 object-cover rounded border"
                           />

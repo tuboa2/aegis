@@ -75,7 +75,7 @@ class CommunityController extends Controller
             'type' => 'required|in:earthquake,flood,storm,wildfire,volcanic,tsunami,other',
             'severity' => 'required|in:low,medium,high,critical',
             'latitude' => 'required|numeric|between:-90,90',
-            'longitude' => 'required|numberic|between:-180,180',
+            'longitude' => 'required|numeric|between:-180,180',
             'location_name' => 'nullable|string|max:255',
             'contact_info' => 'nullable|string|max:500',
             'media' => 'nullable|array|max:5',
@@ -98,7 +98,7 @@ class CommunityController extends Controller
             }
         }
 
-        $report = UserReport::class([
+        $report = UserReport::create([
             'user_id' => $request->user()->id,
             'title' => $request->title,
             'description' => $request->description,
@@ -124,43 +124,45 @@ class CommunityController extends Controller
 
     // Find nearby alert for report association
     private function findNearbyAlert($latitude, $longitude)
-    {
+    {   
+        // Calculate approximate degrees for 50km radius
+        // 1° latitude ≈ 111km, 1° longitude ≈ 111km * cos(latitude)
+        $radiusKm = 50; // Adjust as needed
+        $latDelta = $radiusKm / 111;
+        $lngDelta = $radiusKm / (111 * cos(deg2rad($latitude)));
+
         return \App\Models\DisasterAlert::active()
-            ->whereRaw("
-                (6371 * ACOS(
-                    COS(RADIANS(?)) *
-                    COS(RADIANS(latitude)) *
-                    COS(RADIANS(longitude) - RADIANS(?)) +
-                    SIN(RADIANS(?) * SIN(RADIANS(latitude)))
-                )) < radius_km
-            ", [$latitude, $longitude, $latitude])
+            ->whereBetween('latitude', [
+                $latitude - $latDelta,
+                $latitude + $latDelta
+            ])
+            ->whereBetween('longitude', [
+                $longitude - $lngDelta,
+                $longitude + $lngDelta
+            ])
             ->orderBy('started_by', 'desc')
             ->first();
-    }
+        }   
 
-    // Get a specific report with details
     public function getReport(UserReport $report)
     {
-        // Only allow viewing public reports or user's own reports
         if (!$report->is_public && Auth::id() !== $report->user_id) { 
             return response()->json([
                 'message' => 'Report not found or not accessible'
             ], Response::HTTP_NOT_FOUND);
         }
 
-        $report->load([
-            'user',
-            'alert',
-            'verifiedBy',
-            'comments.user',
-            'upvotes.user'
-        ]);
+        $report->load(['user', 'alert', 'verifiedBy', 'comments.user', 'upvotes.user']);
         $report->loadCount(['comments', 'upvotes']);
 
-        // Check if current user has upvoted
         $report->user_has_upvoted = $report->upvotes()
             ->where('user_id', Auth::id())
             ->exists();
+
+        // ✅ TRANSFORM media_urls to full URLs
+        $report->media_urls = array_map(function($url) {
+            return Storage::url($url); // e.g., http://localhost:8000/storage/reports/abc123.jpg
+        }, $report->media_urls ?? []);
 
         return response()->json($report);
     }

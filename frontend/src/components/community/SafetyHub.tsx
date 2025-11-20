@@ -117,7 +117,7 @@ export function SafetyHub() {
                         {tip.tags.map((tag, tagIndex) => (
                           <span 
                             key={tagIndex}
-                            className="inline-bloc bg-secondary text-secondary-foreground px-2 py-1 rounded text-xs"
+                            className="inline-block bg-secondary text-secondary-foreground px-2 py-1 rounded text-xs"
                           >
                             {tag}
                           </span>

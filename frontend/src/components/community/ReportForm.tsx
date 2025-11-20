@@ -150,12 +150,25 @@ export function ReportForm({ onSuccess, onCancel, initialLocation }: ReportFormP
     try {
       const formData = new FormData();
 
-      // Append form data
-      Object.entries(data).forEach(([key, value]) => {
-        if (value !== undefined) {
-          formData.append(key, value.toString());
-        }
-      });
+      // Append form data with proper boolean handling
+      // ✅ Handle each field explicitly - NO dynamic .toString()
+      formData.append('title', data.title);
+      formData.append('description', data.description);
+      formData.append('type', data.type);
+      formData.append('severity', data.severity);
+      formData.append('latitude', data.latitude.toString());
+      formData.append('longitude', data.longitude.toString());
+      
+      if (data.location_name) {
+        formData.append('location_name', data.location_name);
+      }
+      
+      if (data.contact_info) {
+        formData.append('contact_info', data.contact_info);
+      }
+
+      // ✅ THE FIX: Convert boolean to "1" or "0"
+      formData.append('is_public', data.is_public ? '1' : '0');
 
       // Append media files
       mediaFiles.forEach(file => {
@@ -176,6 +189,7 @@ export function ReportForm({ onSuccess, onCancel, initialLocation }: ReportFormP
       onSuccess?.();
     } catch (error: any) {
       console.error('Error submitting report:', error);
+      console.log('VALIDATION ERRORS:', error.response.data.errors);
       toast({
         title: 'Submission failed',
         description: error.response?.data?.message || 'Unable to submit report. Please try again.',
@@ -321,6 +335,17 @@ export function ReportForm({ onSuccess, onCancel, initialLocation }: ReportFormP
                     step="any"
                     {...register('latitude', { valueAsNumber: true })}
                     className={errors.latitude ? 'border-destructive' : ''}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="longitde">Longitude *</Label>
+                  <Input
+                    id="longitude"
+                    type="number"
+                    step="any"
+                    {...register('longitude', { valueAsNumber: true })}
+                    className={errors.longitude ? 'border-destructive' : ''}
                   />
                 </div>
 

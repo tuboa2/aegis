@@ -24,6 +24,10 @@ class SafetyTip extends Model
         'tags',
     ];
 
+    protected $casts = [
+        'tags' => 'array',
+    ];
+
     // Disaster type constants
     const TYPE_EARTHQUAKE = 'earthquake';
     const TYPE_FLOOD = 'flood';

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('report_upvotes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cacade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('report_id')->constrained('user_reports')->onDelete('cascade');
             $table->timestamps();
 

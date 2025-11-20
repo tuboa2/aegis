@@ -17,6 +17,11 @@ return new class extends Migration
             $table->enum('severity_level', ['low', 'medium', 'high', 'critical']);
             $table->string('title')->nullable();
             $table->text('content')->nullable();
+            $table->text('short_description')->nullable();
+            $table->string('source')->nullable();
+            $table->boolean('is_active')->nullable();
+            $table->integer('order')->nullable();
+            $table->json('tags')->nullable();
             $table->timestamps();
         });
     }

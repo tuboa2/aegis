@@ -82,13 +82,13 @@ class UserReport extends Model
     // Get comments for this report
     public function comments(): HasMany
     {
-        return $this->hasMany(ReportComment::class);
+        return $this->hasMany(ReportComment::class, 'user_id', 'id');
     }
 
     // Get upvotes for this report
     public function upvotes(): HasMany
     {
-        return $this->hasMany(ReportUpvote::class);
+        return $this->hasMany(ReportUpvote::class, 'user_id', 'id');
     }
 
     // Check if report is verified
@@ -130,20 +130,10 @@ class UserReport extends Model
     // Scope by location (within radius)
     public function scopeNearby($query, $lat, $lng, $radiusKm = 50)
     {
-        $earthRadius = 6371; // km
+        $latDelta = $radiusKm / 111; // 1° lat ≈ 111km
+        $lngDelta = $radiusKm / (111 * cos(deg2rad($lat)));
 
-        return $query->selectRaw("
-            *,
-            ({$earthRadius} * 
-            ACOS(COS(RADIANS(?)) * 
-            COS(RADIANS(latitude)) * 
-            COS(RADIANS(longitude) - 
-            RADIANS(?)) +
-            SIN(RADIANS(?)) *
-            SIN(RADIANS(latitude)
-            )) AS distance
-        ", [$lat, $lng, $lat])
-        ->havingRaw('distance < ?', [$radiusKm])
-        ->orderBy('distance');
+        return $query->whereBetween('latitude', [$lat - $latDelta, $lat + $latDelta])
+                     ->whereBetween('longitude', [$lng - $lngDelta, $lng + $lngDelta]);
     }
 }

@@ -4,6 +4,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DisasterAlertController;
 use App\Http\Controllers\AIController;
+use App\Http\Controllers\CommunityController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -49,5 +51,28 @@ Route::middleware(['auth:sanctum'])->group(function() {
     Route::post('/query', [AIController::class, 'processQuery']);
     Route::get('/stats', [AIController::class, 'analysisStats']);
   });
-  
+
+  // New: Community Routes
+  Route::prefix('/community')->group(function () {
+    // Reports
+    Route::get('/reports', [CommunityController::class, 'getReports']);
+    Route::post('/reports', [CommunityController::class, 'createReport']);
+    Route::get('/reports/user', [CommunityController::class, 'getUserReports']);
+    Route::get('/reports/{report}', [CommunityController::class, 'getReport']);
+    Route::post('/reports/{report}/comments', [CommunityController::class, 'addComment']);
+    Route::post('/reports/{report}/upvote', [CommunityController::class, 'upvoteReport']);
+    Route::post('/reports/{report}/share', [CommunityController::class, 'shareReport']);
+
+    // Safety Hub
+    Route::get('/safety-tips', [CommunityController::class, 'getSafetyTips']);
+    Route::get('/emergency-resources', [CommunityController::class, 'getEmergencyResources']);
+  });
+
+  // New: Admin Routes
+  Route::prefix('/admin')->middleware(['auth:sanctum', 'admin'])->group(function () {
+    Route::get('/reports/pending', [AdminController::class, 'getReportsForReview']);
+    Route::post('/reports/{report}/verify', [AdminController::class, 'verifyReport']);
+    Route::post('/reports/{report}/reject', [AdminController::class, 'rejectReport']);
+    Route::get('/community-stats', [AdminController::class, 'getCommunityStats']);
+  });
 });

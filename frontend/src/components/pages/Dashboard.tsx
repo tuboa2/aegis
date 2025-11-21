@@ -7,17 +7,24 @@ import { AlertList } from '../alerts/AlertList';
 import { AlertAISummary } from '../ai/AlertAISummary';
 import { AIChat } from '../ai/AIChat';
 import { PredictiveInsights } from '../ai/PredictiveInsights';
+import { SafetyHub } from '../community/SafetyHub';
+import { ReportForm } from '../community/ReportForm';
+import { ReportList } from '../community/ReportList';
 import { type DisasterAlert } from '../../types/disaster-alert';
+import { type UserReport } from '@/types/community';
 import { api } from '@/lib/api';
 import { motion } from 'framer-motion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../ui/card';
 import { Button } from '../ui/button';
-import { RefreshCw, Filter } from 'lucide-react';
+import { RefreshCw, Filter, Plus } from 'lucide-react';
 
 export function Dashboard() {
   const [alerts, setAlerts] = useState<DisasterAlert[]>([]);
   const [selectedAlert, setSelectedAlert] = useState<DisasterAlert | null>(null);
+  const [showReportForm, setShowReportForm] = useState(false);
+  const [communityReports, setCommunityReports] = useState<UserReport[]>([]);
+  const [selectedReport, setSelectedReport] = useState<UserReport | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -50,6 +57,15 @@ export function Dashboard() {
     }
   };
 
+  const fetchCommunityReports = async () => {
+    try {
+      const response = await api.get('/community/reports');
+      setCommunityReports(response.data.data);
+    } catch (error) {
+      console.error('Error fetching community reports:', error);
+    }
+  };
+
   const handleRefresh = () => {
     setRefreshing(true);
     fetchAlerts();
@@ -57,6 +73,7 @@ export function Dashboard() {
 
   React.useEffect(() => {
     fetchAlerts();
+    fetchCommunityReports();
     const interval = setInterval(fetchAlerts, 30000); // Refresh every 30 seconds
     return () => clearInterval(interval);
   }, []);
@@ -105,6 +122,8 @@ export function Dashboard() {
           <TabsList>
             <TabsTrigger value="map">Live Map</TabsTrigger>
             <TabsTrigger value="alerts">Alert List</TabsTrigger>
+            <TabsTrigger value="community">Community</TabsTrigger>
+            <TabsTrigger value="safety">Safety Hub</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
             <TabsTrigger value="assistant">AI Assistant</TabsTrigger>
           </TabsList>
@@ -287,6 +306,42 @@ export function Dashboard() {
                 )}
               </div>
             </div>
+          </TabsContent>
+
+          {/* New Tab Contents */}
+          <TabsContent value="community" className="space-y-6">
+            <div className="flex justify-between items-center">
+              <div>
+                <h2 className="text-2xl font-bold">Community Reports</h2>
+                <p className="text-muted-foreground">
+                  Share and view real-time information from the community
+                </p>
+              </div>
+              <Button onClick={() => setShowReportForm(true)}>
+                <Plus className="h-4 w-4 mr-2" />
+                Submit Report
+              </Button>
+            </div>
+
+            {showReportForm ? (
+              <ReportForm
+                onSuccess={() => {
+                  setShowReportForm(false);
+                  fetchCommunityReports();
+                }}
+                onCancel={() => setShowReportForm(false)}
+              />
+            ) : (
+              <ReportList
+                reports={communityReports}
+                onReportSelect={setSelectedReport}
+                selectedReport={selectedReport}
+              />
+            )}
+          </TabsContent>
+
+          <TabsContent value="safety" className="space-y-6">
+            <SafetyHub />
           </TabsContent>
         </Tabs>
       </div>

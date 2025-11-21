@@ -106,7 +106,7 @@ class AIController extends Controller
         
         // Log the query for analytics
         \App\Models\QueryLog::create([
-            'query' => $request->query,
+            'query' => $request->input('query'),
             'response' => $result['answer'],
             'confidence' => $result['confidence'],
             'user_id' => $request->user()->id ?? null,

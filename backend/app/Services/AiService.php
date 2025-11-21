@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Cache;
 class AiService 
 {
     protected $apiKey;
-    protected $baseUrl = 'https://api.openai.com/v1';
+    protected $baseUrl = 'https://openrouter.ai/api/v1';
 
     public function __construct()
     {
-        $this->apiKey = config('services.openai.api_key');
+        $this->apiKey = config('services.openrouter.api_key');
     }
 
     /*
@@ -32,11 +32,12 @@ class AiService
         try {
             $prompt = $this->buildAlertSummaryPrompt($alert);
 
-            $response = Http::withHeaders([
+            $response = Http::withOptions(['force_ip_resolve' => 'v4'])
+            ->withHeaders([
                 'Authorization' => 'Bearer ' . $this->apiKey,
                 'Content-Type' => 'application/json',
-            ])->timeout(60)->post($this->baseUrl . '/chat/completions', [
-                'model' => 'gpt-3.5-turbo',
+            ])->timeout(120)->retry(3, 10000)->post($this->baseUrl . '/chat/completions', [
+                'model' => 'openai/gpt-4o',
                 'messages' => [
                     [
                         'role' => 'system',
@@ -48,7 +49,7 @@ class AiService
                     ]
                 ],
                 'temperature' => 0.7,
-                'max_tokens' => 50
+                'max_tokens' => 1000
               ]);
 
               if ($response->successful()) {
@@ -61,10 +62,10 @@ class AiService
                   return $analysis;
               }
 
-              Log::error('OpenAI API request failed: ' . $response->status());
+              Log::error('OpenRouter API request failed: ' . $response->status());
               return $this->getFallbackAnalysis($alert);
         } catch (\Exception $e) {
-            Log::error('OpenAI API error: ' . $e->getMessage());
+            Log::error('OpenRouter API error: ' . $e->getMessage());
             return $this->getFallbackAnalysis($alert);
         }
     }
@@ -205,11 +206,12 @@ class AiService
         try {
             $prompt = $this->buildPredictivePrompt($alerts);
 
-            $response = Http::withHeaders([
+            $response = Http::withOptions(['force_ip_resolve' => 'v4'])
+            ->withHeaders([
                 'Authorization' => 'Bearer ' . $this->apiKey,
                 'Content-Type' => 'application/json',
-            ])->timeout(60)->post($this->baseUrl . '/chat/completions', [
-                'model' => 'gpt-3.5-turbo',
+            ])->timeout(120)->retry(3, 10000)->post($this->baseUrl . '/chat/completions', [
+                'model' => 'openai/gpt-4o',
                 'messages' => [
                     [
                         'role' => 'system',
@@ -221,7 +223,7 @@ class AiService
                     ]
                 ],
                 'temperature' => 0.7,
-                'max_tokens' => 50
+                'max_tokens' => 1000
             ]);
 
             if ($response->successful()) {
@@ -244,7 +246,7 @@ class AiService
     {
         $alertSummary = "Active Alerts:\n";
         foreach ($alerts as $index => $alert) {
-            $alertSummary .= "{$index}. {$alert->type} - {$alert->severity} - {$alert->title}\n";
+            $alertSummary .= "{$index}. {$alert['type']} - {$alert['severity']} - {$alert['title']}\n";
         }
 
         return "
@@ -307,12 +309,13 @@ class AiService
         try {
             $prompt = $this->buildQueryPrompt($query, $context);
 
-            $response = Http::withHeaders([
+            $response = Http::withOptions(['force_ip_resolve' => 'v4'])
+            ->withHeaders([
                 'Authorization' => 'Bearer ' . $this->apiKey,
                 'Content-Type' => 'application/json',
-            ])->timeout(30)->post($this->baseUrl . '/chat/completions', 
+            ])->timeout(120)->retry(3, 10000)->post($this->baseUrl . '/chat/completions', 
                 [
-                    'model' => 'gpt-3.5-turbo',
+                    'model' => 'openai/gpt-4o',
                     'messages' => [
                         [
                             'role' => 'system',
@@ -324,7 +327,7 @@ class AiService
                         ]
                     ],
                     'temperature' => 0.7,
-                    'max_tokens' => 500
+                    'max_tokens' => 1000
             ]);
 
             if ($response->successful()) {

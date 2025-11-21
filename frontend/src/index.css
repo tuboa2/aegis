@@ -1,135 +1,209 @@
+@config "../tailwind.config.js";
 @import "tailwindcss";
 
-/* =====================================
-   USWDS-inspired "Trust" design system
-   ===================================== */
+@custom-variant dark (&:where(.dark, .dark *));
 
-:root {
-  /* === Neutral / Foundations === */
-  --background: 0 0% 96%;          /* #f5f5f5 Neutral-BG */
-  --foreground: 0 0% 10%;          /* #1b1b1b Neutral-Text */
-  --border: 210 5% 85%;            /* #dfe1e2 Neutral-UI */
-  --card: 0 0% 100%;               /* #ffffff Neutral-White */
-  --card-foreground: var(--foreground);
-  --popover: 0 0% 100%;
-  --popover-foreground: var(--foreground);
+@theme {
+  /* Enhanced color system with CSS variables */
+  --color-background: 0 0% 100%;
+  --color-foreground: 222.2 84% 4.9%;
+  --color-primary: 221.2 83.2% 53.3%;
+  --color-primary-foreground: 210 40% 98%;
+  --color-destructive: 0 84.2% 60.2%;
+  --color-destructive-foreground: 210 40% 98%;
+  --color-warning: 38 92% 50%;
+  --color-warning-foreground: 48 96% 89%;
+  --color-border: 214.3 31.8% 91.4%;
+  --color-input: 214.3 31.8% 91.4%;
+  --color-ring: 221.2 83.2% 53.3%;
+  --radius: 0.5rem;
 
-  /* === Brand / Trust Palette === */
-  --primary: 210 100% 32%;         /* #005ea2 Brand-Primary */
-  --primary-foreground: 0 0% 100%; /* white text */
-  --primary-dark: 219 55% 20%;     /* #162e51 Brand-Dark */
-  --primary-light: 210 54% 90%;    /* #d9e8f6 Brand-Light (BG) */
-  --primary-light-text: 205 100% 42%; /* #0076d6 Brand-Light-Text */
-
-  /* === Semantic / Action Palette === */
-  --destructive: 0 89% 36%;        /* #b50909 Semantic-Danger */
-  --destructive-foreground: 0 0% 100%;
-  --warning: 27 96% 62%;           /* #fa9441 Semantic-Warning */
-  --warning-foreground: 0 0% 100%;
-  --caution: 45 100% 59%;          /* #ffbe2e Semantic-Caution */
-  --success: 81 100% 26%;          /* #538200 Semantic-Success */
-  --success-foreground: 0 0% 100%;
-  --info: 210 100% 32%;            /* #005ea2 Semantic-Info (same as primary) */
-  --info-foreground: 0 0% 100%;
-
-  /* === Muted / Secondary === */
-  --muted: var(--primary-light);
-  --muted-foreground: 210 20% 40%;
-
-  /* === Accent (for highlights) === */
-  --accent: 205 100% 42%;          /* #0076d6 */
-  --accent-foreground: 0 0% 100%;
-
-  /* === Other === */
-  --input: var(--border);
-  --ring: var(--primary);
-  --radius: 0.75rem;
+  /* Animation keyframes */
+  --animate-fade-in: fadeIn 0.5s ease-in-out;
+  --animate-slide-up: slideUp 0.3s ease-out;
+  --animate-slide-down: slideDown 0.3s ease-out;
+  --animate-bounce-in: bounceIn 0.6s ease-out;
+  --animate-pulse-soft: pulseSoft 2s ease-in-out infinite;
+  --animate-shimmer: shimmer 2s linear infinite;
 }
 
-/* =====================================
-   Dark Mode (optional)
-   ===================================== */
-
+/* Dark mode variables */
 .dark {
-  --background: 220 25% 8%;
-  --foreground: 0 0% 98%;
-  --border: 220 10% 25%;
-  --card: 220 15% 12%;
-  --card-foreground: var(--foreground);
-  --popover: 220 25% 10%;
-  --popover-foreground: var(--foreground);
-
-  --primary: 210 100% 45%;  /* lighter blue for dark bg */
-  --primary-foreground: 0 0% 100%;
-
-  --primary-dark: 210 100% 30%;
-  --primary-light: 210 54% 85%;
-  --primary-light-text: 205 100% 60%;
-
-  --destructive: 0 85% 55%;
-  --warning: 27 96% 65%;
-  --caution: 45 100% 65%;
-  --success: 81 100% 35%;
-  --info: 210 100% 45%;
-
-  --muted: 220 20% 20%;
-  --muted-foreground: 220 10% 65%;
-
-  --accent: 205 100% 60%;
-  --accent-foreground: 0 0% 100%;
-  --ring: var(--primary);
+  --color-background: 222.2 84% 4.9%;
+  --color-foreground: 210 40% 98%;
+  --color-primary: 217.2 91.2% 59.8%;
+  --color-primary-foreground: 222.2 84% 4.9%;
+  --color-destructive: 0 62.8% 30.6%;
+  --color-destructive-foreground: 210 40% 98%;
+  --color-warning: 48 96% 89%;
+  --color-warning-foreground: 38 92% 50%;
+  --color-border: 217.2 32.6% 17.5%;
+  --color-input: 217.2 32.6% 17.5%;
+  --color-ring: 224.3 76.3% 94.1%;
 }
 
-/* =====================================
-   Global base styles
-   ===================================== */
+/* Custom animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-100%),
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulseSoft {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-positon: 200% 0;
+  }
+}
+
+/* Enhanced scrollbar styling */
+@supports (scrollbar-width: thin) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--border)) transparent;
+  }
+}
+
+/* Custom scrollbar for Webkit */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in oklab, hsl(var(--border)) 80%, black 20%);
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Container query support */
+@container (min-width: 640px) {
+  .card-responsive {
+    grid-template-columns: 1fr 2fr;
+  }
+}
+
+/* Print stlyes */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .print-break-after {
+    page-break-after: always;
+  }
+}
+
+/* Enhanced selection styles */
+::selection {
+  background-color: color-mix(in oklab, hsl(var(--primary)) 30%, transparent 70%);
+  color: hsl(var(--primary-foreground));
+}
+
+/* Smooth transitions for all interactive elements */
 * {
-  border-color: hsl(var(--border));
-  transition:
-    color 0.15s ease,
-    background-color 0.15s ease,
-    border-color 0.15s ease;
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
+/* Enhanced body stlyes */
 body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
+  font-feature-settings: "rlig" 1, "calt" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smooting: grayscale;
 }
 
-/* =====================================
-   Semantic Shortcuts (Tailwind-like)
-   ===================================== */
+/* Utility classes for container queries */
+@container (min-width: 480px) {
+  .\@sm\:flex-row {
+    flex-direction: row;
+  }
+}
 
-.bg-background { background-color: hsl(var(--background)); }
-.text-foreground { color: hsl(var(--foreground)); }
-
-.bg-primary { background-color: hsl(var(--primary)); }
-.text-primary { color: hsl(var(--primary)); }
-.text-primary-foreground { color: hsl(var(--primary-foreground)); }
-
-.bg-secondary { background-color: hsl(var(--muted)); }
-.text-secondary-foreground { color: hsl(var(--muted-foreground)); }
-
-.bg-destructive { background-color: hsl(var(--destructive)); }
-.text-destructive-foreground { color: hsl(var(--destructive-foreground)); }
-
-.bg-warning { background-color: hsl(var(--warning)); }
-.text-warning-foreground { color: hsl(var(--warning-foreground)); }
-
-.bg-caution { background-color: hsl(var(--caution)); }
-.text-success { color: hsl(var(--success)); }
-.bg-success { background-color: hsl(var(--success)); }
-.text-success-foreground { color: hsl(var(--success-foreground)); }
-
-.bg-info { background-color: hsl(var(--info)); }
-.text-info-foreground { color: hsl(var(--info-foreground)); }
-
-.bg-accent { background-color: hsl(var(--accent)); }
-.text-accent { color: hsl(var(--accent)); }
-.text-accent-foreground { color: hsl(var(--accent-foreground)); }
-
-.bg-card { background-color: hsl(var(--card)); }
-.text-card-foreground { color: hsl(var(--card-foreground)); }
-
-.border-border { border-color: hsl(var(--border)); }
+@container (min-width: 768px) {
+  .\@md\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

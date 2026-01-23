@@ -1,183 +1,295 @@
-# 🌍 Aegis — Phase 5: Community Reporting & Safety Hub
+# 🌍 Aegis - AI-Powered Disaster Management Platform
 
-## 📋 Phase Summary
+[![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white)](https://openai.com)
 
-**Objectives Achieved:**
-- ✅ Community reporting system with media uploads implemented
-- ✅ User-generated content features with verification system
-- ✅ Safety tips and educational content management built
-- ✅ Social sharing capabilities added
-- ✅ User verification and trust system implemented
-- ✅ Emergency contact and resource management created
+A comprehensive disaster monitoring and community response system that combines real-time data visualization, AI-driven analytics, and crowdsourced reporting to protect communities during natural disasters.
 
-## 📁 Files & Folders Created/Modified
+## ✨ Features
 
-### Backend (`/backend`)
-backend/
-├── app/
-│ ├── Models/
-│ │ ├── UserReport.php (enhanced)
-│ │ ├── ReportComment.php
-│ │ ├── ReportUpvote.php
-│ │ └── SafetyTip.php
-│ ├── Http/Controllers/
-│ │ ├── CommunityController.php
-│ │ └── AdminController.php
-│ └── Http/Middleware/
-│ └── AdminMiddleware.php
-├── database/
-│ ├── migrations/
-│ │ ├── 2024_01_01_000007_update_user_reports_table.php
-│ │ ├── 2024_01_01_000008_create_report_comments_table.php
-│ │ └── 2024_01_01_000009_create_report_upvotes_table.php
-│ └── seeders/
-│ └── SafetyTipSeeder.php
-└── routes/
-└── api.php
+### 🏠 Core Functionality
+- **Real-time Disaster Monitoring** - Live alerts for earthquakes, floods, storms, wildfires, and volcanic activity
+- **Interactive Map Visualization** - Geographic display of active disasters with severity-based color coding
+- **AI-Powered Analytics** - GPT-4 powered risk assessments and predictive insights
+- **Natural Language Queries** - Conversational AI assistant for disaster information
 
-### Frontend (`/frontend`)
-frontend/
-├── src/
-│ ├── components/
-│ │ └── community/
-│ │ ├── ReportForm.tsx
-│ │ ├── ReportList.tsx
-│ │ └── SafetyHub.tsx
-│ ├── types/
-│ │ └── community.ts
-│ └── components/ui/
-│ ├── textarea.tsx
-│ └── select.tsx
-└── package.json
+### 👥 Community Features
+- **Crowdsourced Reporting** - User-generated disaster reports with media uploads
+- **Content Verification** - Admin moderation system for report validation
+- **Social Engagement** - Comments, upvotes, and sharing capabilities
+- **Safety Hub** - Comprehensive disaster preparedness resources and emergency contacts
 
-## 🔧 Technical Implementation
+### 🔧 Technical Features
+- **Multi-source Data Integration** - External API connections with caching and fallbacks
+- **Location Services** - GPS-based reporting with privacy controls
+- **Responsive Design** - Mobile-first approach with modern UI components
+- **Role-based Access Control** - Admin panel for content moderation
 
-### Community Features:
-1. **User Reporting System** - Submit disaster reports with media uploads
-2. **Content Verification** - Admin review and verification system
-3. **Social Engagement** - Upvotes, comments, and sharing capabilities
-4. **Safety Resources** - Comprehensive safety tips and emergency contacts
-5. **Location Services** - Geolocation and nearby report filtering
+## 🏗️ Architecture
 
-### Key Components:
-- **Report Submission**: Multi-step form with media upload and location detection
-- **Community Feed**: Real-time listing of user reports with filtering
-- **Safety Hub**: Organized safety information by disaster type
-- **Admin Panel**: Report verification and community management
-- **Emergency Resources**: Contact information and preparedness guides
+### Backend Stack
+- **Framework**: Laravel 11.x (PHP 8.2+)
+- **Database**: MySQL 8.0+
+- **Authentication**: Laravel Sanctum
+- **AI Integration**: OpenRouter API (GPT-4)
+- **File Storage**: Laravel Storage (local/cloud)
+- **Caching**: Redis/File-based caching
 
-## 🛣️ API Routes Added
+### Frontend Stack
+- **Framework**: React 18.x with TypeScript
+- **Build Tool**: Vite
+- **UI Library**: Shadcn/ui + Tailwind CSS
+- **State Management**: React hooks + Context API
+- **Maps**: Leaflet.js for interactive mapping
+- **Animations**: Framer Motion
 
-| Method | URL | Purpose | Auth Required |
-|--------|-----|---------|---------------|
-| GET | `/api/community/reports` | List community reports | No |
-| POST | `/api/community/reports` | Create new report | Yes |
-| GET | `/api/community/reports/user` | Get user's reports | Yes |
-| GET | `/api/community/reports/{id}` | Get report details | No |
-| POST | `/api/community/reports/{id}/comments` | Add comment | Yes |
-| POST | `/api/community/reports/{id}/upvote` | Upvote report | Yes |
-| POST | `/api/community/reports/{id}/share` | Share report | No |
-| GET | `/api/community/safety-tips` | Get safety tips | No |
-| GET | `/api/community/emergency-resources` | Get emergency contacts | No |
-| GET | `/api/admin/reports/pending` | Get pending reports (Admin) | Yes |
-| POST | `/api/admin/reports/{id}/verify` | Verify report (Admin) | Yes |
-| POST | `/api/admin/reports/{id}/reject` | Reject report (Admin) | Yes |
-| GET | `/api/admin/community-stats` | Community statistics (Admin) | Yes |
+## 📋 Prerequisites
 
-## 🗃️ Database Updates
+- **PHP** >= 8.2
+- **Composer** >= 2.0
+- **Node.js** >= 18.0
+- **npm** or **pnpm**
+- **MySQL** >= 8.0
+- **Redis** (optional, for enhanced caching)
 
-### New Tables:
-1. **report_comments** - User comments on community reports
-2. **report_upvotes** - User upvotes for community engagement
-3. **safety_tips** - Educational content and safety information
+## 🚀 Installation
 
-### Enhanced Tables:
-- **user_reports** - Added community features (upvotes, comments, verification)
-- **users** - Added admin capabilities for content moderation
+### Backend Setup
 
-## 🧪 Test Checklist
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/aegis.git
+   cd aegis/backend
+   ```
 
-### Backend Tests:
-- [ ] Report submission with media upload works
-- [ ] Comment system functions correctly
-- [ ] Upvote system tracks user interactions
-- [ ] Admin verification workflow functions
-- [ ] Safety tips and resources return data
-- [ ] Location-based filtering works
+2. **Install PHP dependencies**
+   ```bash
+   composer install
+   ```
 
-### Frontend Tests:
-- [ ] Report form validates input and uploads media
-- [ ] Community report list displays and filters correctly
-- [ ] Safety hub loads and organizes content properly
-- [ ] Emergency contacts are accessible
-- [ ] User interactions (upvotes, comments) work
-- [ ] Geolocation detection functions
+3. **Environment configuration**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-### Integration Tests:
-- [ ] Media files upload and display correctly
-- [ ] Real-time community feed updates
-- [ ] Admin panel access controls work
-- [ ] Social sharing generates proper links
-- [ ] Error handling for failed submissions
+4. **Configure database**
+   ```bash
+   # Update .env with your database credentials
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=aegis
+   DB_USERNAME=your_username
+   DB_PASSWORD=your_password
+   ```
 
-## 🐛 Common Issues & Fixes
+5. **Run migrations and seeders**
+   ```bash
+   php artisan migrate
+   php artisan db:seed
+   ```
 
-1. **Media Upload Failures**
-   - Check file size limits (5MB per file)
-   - Verify supported file types (images only)
-   - Ensure storage permissions are set
-   - Check disk configuration in Laravel
+6. **Configure AI service**
+   ```bash
+   # Add your OpenRouter API key to .env
+   OPENROUTER_API_KEY=your_api_key_here
+   ```
 
-2. **Location Services Issues**
-   - Verify browser geolocation permissions
-   - Check HTTPS requirement for geolocation
-   - Test fallback manual location input
-   - Validate coordinate formats
+7. **Start the backend server**
+   ```bash
+   php artisan serve
+   ```
 
-3. **Admin Access Problems**
-   - Verify user has is_admin flag set to true
-   - Check admin middleware configuration
-   - Ensure proper authentication
-   - Verify route permissions
+### Frontend Setup
 
-4. **Real-time Updates**
-   - Check polling intervals for community feed
-   - Verify WebSocket connections if implemented
-   - Test state management for user interactions
-   - Validate cache clearing on updates
+1. **Navigate to frontend directory**
+   ```bash
+   cd ../frontend
+   ```
 
-## 🎨 UI/UX Improvements
+2. **Install dependencies**
+   ```bash
+   pnpm install
+   # or
+   npm install
+   ```
 
-**Community Reporting:**
-- Intuitive multi-step form with progress indicators
-- Drag-and-drop media upload with previews
-- Smart location detection with manual override
-- Clear validation and error messaging
+3. **Environment configuration**
+   ```bash
+   cp .env.example .env
+   # Update API base URL to match your backend
+   VITE_API_BASE_URL=http://localhost:8000/api
+   ```
 
-**Community Feed:**
-- Visual status indicators (verified, pending, rejected)
-- Severity-based color coding
-- Interactive upvote and comment system
-- Media preview galleries
+4. **Start development server**
+   ```bash
+   pnpm dev
+   # or
+   npm run dev
+   ```
 
-**Safety Hub:**
-- Tab-based organization by content type
-- Visual disaster type icons
-- Actionable emergency contact buttons
-- Responsive card-based layouts
+## 🎯 Usage
 
-## 🔒 Security & Privacy
+### Accessing the Application
 
-- **Content Moderation**: Admin verification for user reports
-- **Media Validation**: File type and size restrictions
-- **Location Privacy**: Optional location sharing with defaults
-- **User Data Protection**: Contact information handled securely
-- **Access Control**: Role-based permissions for admin features
+1. **Backend API**: `http://localhost:8000`
+2. **Frontend Application**: `http://localhost:5173`
 
-## 🚀 Performance Optimizations
+### User Roles
 
-- **Media Optimization**: Image compression and lazy loading
-- **Pagination**: Efficient loading of community reports
-- **Caching**: Safety tips and emergency resources caching
-- **Background Processing**: Media upload processing queues
-- **Database Indexing**: Optimized queries for location-based features
+- **Public Users**: View disaster alerts, community reports, and safety resources
+- **Registered Users**: Submit reports, comment, upvote, and access personalized features
+- **Administrators**: Moderate content, verify reports, and manage community resources
+
+### Key Workflows
+
+1. **View Live Disasters**: Navigate to the dashboard map to see real-time alerts
+2. **Submit Community Report**: Use the community tab to report local incidents
+3. **Access Safety Resources**: Visit the Safety Hub for disaster-specific guidance
+4. **AI Assistance**: Ask questions through the AI Chat interface
+
+## 📚 API Documentation
+
+### Authentication Endpoints
+```
+POST   /api/register          - User registration
+POST   /api/login             - User login
+POST   /api/logout            - User logout
+GET    /api/user              - Get authenticated user
+```
+
+### Disaster Alert Endpoints
+```
+GET    /api/alerts            - List active disaster alerts
+GET    /api/alerts/{id}       - Get specific alert details
+```
+
+### Community Endpoints
+```
+GET    /api/community/reports              - List community reports
+POST   /api/community/reports              - Create new report
+GET    /api/community/reports/{id}         - Get report details
+POST   /api/community/reports/{id}/comments - Add comment
+POST   /api/community/reports/{id}/upvote   - Upvote report
+GET    /api/community/safety-tips          - Get safety tips
+```
+
+### Admin Endpoints (Requires Admin Authentication)
+```
+GET    /api/admin/reports/pending    - Get pending reports
+POST   /api/admin/reports/{id}/verify - Verify report
+POST   /api/admin/reports/{id}/reject - Reject report
+GET    /api/admin/community-stats    - Community statistics
+```
+
+## 🗄️ Database Schema
+
+### Core Tables
+- `users` - User accounts and authentication
+- `disaster_alerts` - Official disaster alert data
+- `user_reports` - Community-submitted reports
+- `report_comments` - User comments on reports
+- `report_upvotes` - User upvotes for engagement
+- `safety_tips` - Educational content and resources
+- `ai_summaries` - Cached AI-generated analyses
+- `query_logs` - User query tracking
+
+## 🧪 Testing
+
+### Backend Testing
+```bash
+cd backend
+php artisan test
+```
+
+### Frontend Testing
+```bash
+cd frontend
+pnpm test
+# or
+npm test
+```
+
+### Test Coverage
+- Unit tests for core business logic
+- Feature tests for API endpoints
+- Integration tests for user workflows
+- E2E tests for critical user journeys
+
+## 🔧 Development
+
+### Code Quality
+- **PHP**: PSR-12 coding standards
+- **JavaScript/TypeScript**: ESLint configuration
+- **Git Hooks**: Pre-commit quality checks
+
+### Environment Variables
+```env
+# Backend (.env)
+APP_NAME=Aegis
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://localhost:8000
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=aegis
+DB_USERNAME=
+DB_PASSWORD=
+
+OPENROUTER_API_KEY=
+
+# Frontend (.env)
+VITE_API_BASE_URL=http://localhost:8000/api
+VITE_APP_NAME=Aegis
+```
+
+## 🚀 Deployment
+
+### Production Considerations
+- **SSL Certificate**: Required for geolocation services
+- **File Storage**: Configure cloud storage (AWS S3, etc.)
+- **Caching**: Implement Redis for production caching
+- **Monitoring**: Set up error tracking and performance monitoring
+- **Backup**: Configure automated database backups
+
+### Docker Deployment (Optional)
+```bash
+# Build and run with Docker
+docker-compose up -d
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Development Guidelines
+- Follow PSR-12 for PHP code
+- Use TypeScript for all React components
+- Write tests for new features
+- Update documentation as needed
+- Ensure responsive design for all features
+
+## 🙋 Support
+
+For support, email support@aegis-platform.com or join our Discord community.
+
+## 🙏 Acknowledgments
+
+- **Laravel** - The PHP framework for web artisans
+- **React** - A JavaScript library for building user interfaces
+- **OpenAI** - For providing powerful AI capabilities
+- **Open-source contributors** - For their valuable contributions
+
+---
+
+**Built with ❤️ for community safety and disaster preparedness**

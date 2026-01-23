@@ -279,10 +279,6 @@ docker-compose up -d
 - Update documentation as needed
 - Ensure responsive design for all features
 
-## 🙋 Support
-
-For support, email support@aegis-platform.com or join our Discord community.
-
 ## 🙏 Acknowledgments
 
 - **Laravel** - The PHP framework for web artisans

@@ -14,13 +14,16 @@ return [
     |
     */
 
-    'openweather' => [
-        'api_key' => env('OPENWEATHER_API_KEY'),
-        'base_url' => 'https://api.openweathermap.org/data/3.0/',
+    'gdacs' => [
+        'base_url' => 'https://www.gdacs.org/xml/',
+    ],
+
+    'nws' => [
+        'base_url' => 'https://api.weather.gov/',
     ],
 
     'nasa_eonet' => [
-        'api_key' => env('NASE_EONET_API_KEY'),
+        'api_key' => env('NASA_EONET_API_KEY'),
         'base_url' => 'https://eonet.gsfc.nasa.gov/api/v3/',
     ],
 

@@ -23,7 +23,6 @@ return new class extends Migration
             // Indexes for performance
             $table->index(['status', 'is_public']);
             $table->index(['user_id', 'created_at']);
-            $table->index(['latitude', 'longitude']);
         });
     }
 

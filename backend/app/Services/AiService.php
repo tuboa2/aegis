@@ -99,7 +99,7 @@ class AiService
                 \"risk_assessment\": {
                     \"overall_risk\": \"low/moderate/high/severe/critical\",
                     \"factors\": [\"key risk factor 1\", \"key risk factor 2\"],
-                    \"timeline\" \"Expected development timeline\",
+                    \"timeline\": \"Expected development timeline\",
                     \"impact_areas\": [\"Primary affected areas\", \"Secondary affected areas\"], 
                 },
                 \"key_findings\": [\"Important observation 1\", \"Important observation 2\"],
@@ -219,7 +219,7 @@ class AiService
                     ],
                     [
                         'role' => 'user',
-                        'message' => $prompt
+                        'content' => $prompt
                     ]
                 ],
                 'temperature' => 0.7,

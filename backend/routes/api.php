@@ -34,10 +34,11 @@ Route::middleware(['auth:sanctum'])->group(function() {
     Route::post('/change-password', [UserController::class, 'changePassword']);
   });
 
-  // Disater alerts (to be implemented later)
+  // Disaster alerts
   Route::prefix('/alerts')->group(function () {
     Route::get('/', [DisasterAlertController::class, 'index']);
     Route::get('/statistics', [DisasterAlertController::class, 'statistics']);
+    Route::get('/ingestion-health', [DisasterAlertController::class, 'ingestionHealth']);
     Route::post('/', [DisasterAlertController::class, 'store']);
     Route::get('/alert', [DisasterAlertController::class, 'show']);
     Route::post('/sync-external', [DisasterAlertController::class, 'syncExternalData']);

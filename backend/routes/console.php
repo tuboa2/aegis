@@ -8,4 +8,7 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-Schedule::command('aegis:sync-disaster-data')->everyFiveMinutes();
+Schedule::command('aegis:sync-disaster-data')->everyFiveMinutes()
+    ->withoutOverlapping()
+    ->runInBackground()
+    ->appendOutputTo(storage_path('logs/disaster-sync.log'));

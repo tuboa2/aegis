@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\DisasterAlert;
-use App\Services\AIService;
+use App\Services\AiService;
 use Illuminate\Console\Command;
 
 class TestAIIntegration extends Command
@@ -13,7 +13,7 @@ class TestAIIntegration extends Command
 
     protected $aiService;
 
-    public function __construct(AIService $aiService)
+    public function __construct(AiService $aiService)
     {
         parent::__construct();
         $this->aiService = $aiService;
